@@ -1,0 +1,79 @@
+;Basic Transmission Packet
+;Authors: Sasha Crofter, dylwhich
+
+;testcode
+SET A, 0x3000
+SET B, 12
+JSR func_makepacket
+SET [0x3010], 0x0F54
+SET [0x3011], 0x0F72
+SET [0x3012], 0x0F61
+SET [0x3013], 0x0F6E
+SET [0x3014], 0x0F73
+SET [0x3015], 0x0F6D
+SET [0x3016], 0x0F69
+SET [0x3017], 0x0F73
+SET [0x3018], 0x0F73
+SET [0x3019], 0x0F69
+SET [0x301A], 0x0F6F
+SET [0x301B], 0x0F6E
+
+SET [0x4000], 0xEF98
+SET [0x4001], 0xFACE
+
+SET A, 0x3000
+SET B, [0x4000]
+SET C, [0x4001]
+JSR func_attachids
+
+SET A, 0x8000
+SET B, 0x3000
+JSR func_extractdata
+SET PC, EOF
+;build interpreter for BTP
+
+:func_makepacket ;(address, length)
+
+SET [A], 0x6270  ;magic number
+ADD A, 1
+SET [A], 16       ;flags
+ADD A, 1
+SET [A], B        ;length
+ADD A, 1
+SET [A], 8        ;time to live
+;ADD A, 1
+;SET [A], target ID
+;ADD A, 5 for target UID
+;SET [A], sender ID
+;ADD A, 5 for sender UID
+;SET [A], reserved
+;ADD A, 1
+;SET [A], reserved
+
+SET PC, POP
+
+:func_attachids ;(pacadr, targetid, senderid)
+
+ADD A, 4
+SET [A], B
+ADD A, 5
+SET [A], C
+
+SET PC, POP
+
+:func_extractdata ;(targadr, pacadr)
+
+ADD B, 2
+SET C, [B]
+ADD B, 14
+:func_extractdata_writeloop
+SET [A], [B]
+ADD A, 1
+ADD B, 1
+SUB C, 1
+IFG C, 0
+SET PC, func_extractdata_writeloop
+
+SET PC, POP
+
+:EOF SET PC, EOF

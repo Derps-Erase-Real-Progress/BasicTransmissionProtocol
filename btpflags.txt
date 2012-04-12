@@ -1,0 +1,27 @@
+0b0000 0000 0000 0001
+has flag 0 set
+This is represented in the DCPU-16 as
+0x0001
+This representation makes it somewhat
+difficult to handle the flags, but it
+shouldn't be much of a problem. The
+flag designations are as follows. 1
+means they are active, 0 means they
+are not.
+
+0: BROADCAST; meant to be recieved by all (0 means targetid is set)
+1: RETURNADR; includes ID of sender
+2: TARGETUID; includes UID of target
+3: SENDERUID; includes UID of sender
+4: DISTRESS ; distress signal (priority)
+5: reserved
+6: ISWARNING; message is a warning (priority)
+7: ISDATA   ; message is data
+8: ENCRYPTED; message is encrypted 
+9
+A
+B
+C
+D
+E
+F: reserved ; reserved flags
