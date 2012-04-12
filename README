@@ -6,23 +6,39 @@ The UID would be useful primarily in checking that one is actually the intended 
 The ID is only one word, so it is not unique. It could be used for quick addressing, though, for use in identifying targets within a peer-to-peer network.
 
 2. Header
-The Basic Transfer Packet has a 16-word header with content (in its current version) as follows.
- 0. Magic Number (0x6270)
- 1. Flags (documented in btpflags.txt)
- 2. Length of content in packet
- 3. Time To Live
- 4. Target ID (optionally set)
- 5
- 6
- 7
- 8. Target UID (optionally set)
- 9. Sender ID (optionally set)
- A
- B
- C
- D. Sender UID (optionally set)
- E. reserved word
- F. reserved word
+The Basic Transfer Packet has a 32-word header with content (in its current version) as follows.
+00. Magic Number (0x6270)
+01. Flags (documented in btpflags.txt)
+02. Length of content in packet
+03. Time To Live
+04. Target ID (optionally set)
+05
+06
+07
+08. Target UID (optionally set)
+09. Sender ID (optionally set)
+0A
+0B
+0C
+0D. Sender UID (optionally set)
+0E. reserved word
+0F. reserved word
+10. reserved word
+11. reserved word
+12. reserved word
+13. reserved word
+14. reserved word
+15. reserved word
+16. reserved word
+17. reserved word
+18. reserved word
+19. reserved word
+1A. reserved word
+1B. reserved word
+1C. reserved word
+1D. reserved word
+1E. reserved word
+1F. reserved word
 
 3. Time To Live
 Time To Live (TTL) is extremely necessary in transmission across peer-to-peer networks. It is a value that is decremented before a packet is resent across the network. When it reaches zero, the packet is not resent along the network, but instead dropped. Standard interfaces could drop packets with very high TTL values, to avoid network flooding.
